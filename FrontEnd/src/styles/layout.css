@@ -1,0 +1,104 @@
+/* Sidebar Container */
+.sidebar {
+  width: 80px; /* Chiều rộng cố định nhỏ gọn */
+  height: 100vh; /* Full chiều cao màn hình */
+  background-color: #ffffff;
+  border-right: 1px solid #f0f0f0; /* Đường viền mờ bên phải */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  position: fixed; /* Cố định bên trái */
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.02); /* Đổ bóng rất nhẹ */
+}
+
+/* Logo Area */
+.sidebar-logo {
+  margin-bottom: 40px;
+}
+
+.logo-icon {
+  font-size: 32px;
+  color: #fb923c; /* Màu cam logo (gần giống Orange-400) */
+  background: #fff7ed; /* Nền cam rất nhạt bao quanh logo (optional) */
+  padding: 5px;
+  border-radius: 8px;
+}
+
+/* Menu List */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px; /* Khoảng cách rộng giữa các icon như trong hình */
+  width: 100%;
+}
+
+/* Menu Item */
+.menu li {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.menu li a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  color: #9ca3af; /* Màu xám nhạt cho icon chưa active (Gray-400) */
+  font-size: 20px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+/* Hover Effect */
+.menu li a:hover {
+  color: #fb923c;
+  background-color: #fff7ed; /* Màu nền cam siêu nhạt khi hover */
+}
+
+/* Active State - Quan trọng */
+.menu li.active a {
+  color: #ffffff; /* Icon chuyển sang trắng */
+  background-color: #fb923c; /* Nền cam đậm */
+  box-shadow: 0 4px 10px rgba(251, 146, 60, 0.4); /* Đổ bóng cam */
+}
+
+/* Placeholder icons (Disabled) */
+.menu li.disabled {
+  color: #d1d5db;
+  font-size: 20px;
+  cursor: not-allowed;
+}
+
+/* Sidebar Footer (Settings icon) */
+.sidebar-footer {
+  margin-top: auto; /* Đẩy xuống dưới cùng */
+  margin-bottom: 20px;
+}
+
+.sidebar-footer a {
+  color: #9ca3af;
+  font-size: 22px;
+  transition: color 0.3s;
+}
+
+.sidebar-footer a:hover {
+  color: #fb923c;
+}
+
+/* Điều chỉnh lại Main Content để không bị Sidebar che mất */
+.app-layout .main-content {
+  margin-left: 80px; /* Đẩy nội dung sang phải bằng width của sidebar */
+  width: calc(100% - 80px);
+  background-color: #fafafa; /* Màu nền tổng thể xám rất nhạt */
+}
