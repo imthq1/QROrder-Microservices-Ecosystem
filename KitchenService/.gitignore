@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/KitchenService/src/main/resources/application.properties

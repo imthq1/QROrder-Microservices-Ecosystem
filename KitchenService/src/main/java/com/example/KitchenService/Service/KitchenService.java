@@ -14,9 +14,9 @@ public class KitchenService {
         this.kitchenOrderRepository = kitchenOrderRepository;
     }
     public List<KitchenOrder> getActiveOrders() {
-        return kitchenOrderRepository.findByStatus(KitchenOrderStatus.COOKING);
+        return kitchenOrderRepository.findByStatusOrderByCreatedAtAsc(KitchenOrderStatus.COOKING);
     }
     public List<KitchenOrder> getActiveOrdersByStatus(KitchenOrderStatus status) {
-        return kitchenOrderRepository.findByStatus(status);
+        return kitchenOrderRepository.findByStatusOrderByCreatedAtAsc(status);
     }
 }
