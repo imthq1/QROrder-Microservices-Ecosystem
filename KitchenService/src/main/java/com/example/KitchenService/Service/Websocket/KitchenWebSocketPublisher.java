@@ -25,6 +25,7 @@ public class KitchenWebSocketPublisher {
                 .tableId(order.getTableId())
                 .sessionId(order.getSessionId())
                 .status(order.getStatus())
+                .createdAt(order.getCreatedAt())
                 .items(order.getItems().stream()
                         .map(i -> KitchenOrderItemWsDto.builder()
                                 .id(i.getId())
