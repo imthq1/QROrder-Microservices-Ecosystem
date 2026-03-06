@@ -1,0 +1,79 @@
+.calendar-stats-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Xuống dòng nếu màn hình nhỏ */
+}
+
+.stat-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px; /* Bo góc nhẹ như hình mẫu */
+  font-size: 13px;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+
+.stat-pill:hover {
+  transform: translateY(-2px);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px; /* Chấm vuông bo góc nhẹ */
+  background-color: currentColor; /* Lấy màu text hiện tại */
+}
+
+.stat-label {
+  color: #555;
+}
+
+.stat-count {
+  color: #888;
+  font-weight: 500;
+}
+
+/* --- Color Themes (Giống hình design) --- */
+
+/* 1. Meetings (Cam đậm) */
+.stat-orange {
+  background-color: #fff9db; /* Nền vàng nhạt */
+}
+.stat-orange .dot {
+  background-color: #fd7e14;
+}
+
+/* 2. Menu Updates (Vàng/Beige) */
+.stat-beige {
+  background-color: #fff4e6;
+}
+.stat-beige .dot {
+  background-color: #ffc078;
+}
+
+/* 3. Inventory Checks (Xám nhạt/Hồng nhạt) */
+.stat-light {
+  background-color: #f8f9fa;
+}
+.stat-light .dot {
+  background-color: #dee2e6;
+}
+
+/* 4. Events (Xám Đậm) */
+.stat-grey {
+  background-color: #f1f3f5;
+}
+.stat-grey .dot {
+  background-color: #868e96;
+}
+
+/* 5. Trainings (Đỏ/Hồng) */
+.stat-red {
+  background-color: #fff5f5;
+}
+.stat-red .dot {
+  background-color: #fa5252;
+}

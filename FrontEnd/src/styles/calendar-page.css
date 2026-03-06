@@ -1,0 +1,260 @@
+/* Layout chung: 2 cột (Main Calendar - Sidebar) */
+.calendar-layout {
+  display: flex;
+  height: calc(100vh - 80px);
+  background: #f8f9fa;
+  gap: 20px;
+  padding: 20px;
+}
+
+.calendar-main {
+  flex: 1;
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.calendar-sidebar {
+  width: 350px;
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+/* --- Calendar Header --- */
+.cal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cal-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.nav-buttons button {
+  background: #f1f3f5;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cal-actions {
+  display: flex;
+  gap: 12px;
+}
+.view-tabs button {
+  background: #f8f9fa;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #666;
+}
+.view-tabs button:first-child {
+  border-radius: 8px 0 0 8px;
+}
+.view-tabs button:last-child {
+  border-radius: 0 8px 8px 0;
+}
+.view-tabs button.active {
+  background: #ffe8cc;
+  color: #fd7e14;
+}
+
+.btn-add-schedule {
+  background: #fd7e14;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+/* --- Calendar GRID --- */
+.cal-grid-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 600;
+  color: #888;
+}
+
+.cal-grid-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 1fr; /* Các hàng cao bằng nhau */
+  gap: 10px;
+  flex: 1; /* Chiếm hết chiều cao còn lại */
+}
+
+.cal-cell {
+  border: 1px solid #f1f3f5;
+  border-radius: 12px;
+  padding: 8px;
+  min-height: 100px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.cal-cell:hover {
+  border-color: #fd7e14;
+  background: #fff9db;
+}
+.cal-cell.selected {
+  border: 2px solid #fd7e14;
+}
+.cal-cell.empty {
+  background: #fcfcfc;
+  border: none;
+}
+
+.day-number {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* Mini Event Bars inside Cell */
+.events-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mini-event {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Color Themes */
+.evt-orange {
+  background: #ffc078;
+  color: #d9480f;
+} /* Menu Update */
+.evt-black {
+  background: #343a40;
+  color: white;
+} /* Event */
+.evt-beige {
+  background: #ffe3e3;
+  color: #c92a2a;
+} /* Training (Custom) */
+
+/* --- SIDEBAR --- */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.selected-date-info h4 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+}
+.event-count {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.event-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.event-card {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-left: 4px solid #ddd;
+}
+
+.event-card .event-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.evt-title {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+}
+
+.evt-meta .meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.evt-team {
+  margin-top: 12px;
+  border-top: 1px dashed #ddd;
+  padding-top: 8px;
+}
+
+.evt-note-box {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #e9ecef; /* Đường kẻ phân cách nhẹ */
+}
+
+.note-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #868e96;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.note-content {
+  margin: 0;
+  font-size: 13px;
+  color: #495057;
+  line-height: 1.5;
+  font-style: italic;
+}

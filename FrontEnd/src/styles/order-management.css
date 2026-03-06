@@ -1,0 +1,335 @@
+/* Layout chính */
+.admin-content {
+  padding: 24px;
+  background-color: #f4f6f8; /* Màu nền xám nhẹ cho toàn trang */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; /* Quan trọng: Xếp dọc */
+  gap: 24px; /* Khoảng cách giữa các khối lớn */
+}
+
+/* Header Title */
+.page-header-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.page-header-title h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+.current-date {
+  color: #666;
+  font-size: 14px;
+}
+
+/* 1. Summary Cards (Grid Layout) */
+.summary-cards {
+  display: grid;
+  /* Tự động chia cột, tối thiểu 240px mỗi card */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.summary-item {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s;
+}
+.summary-item:hover {
+  transform: translateY(-2px);
+}
+/* Base Style cho Badge (Hình viên thuốc) */
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 50px; /* Bo tròn kiểu viên thuốc */
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize; /* Viết hoa chữ cái đầu nếu cần */
+  min-width: 100px;
+  text-align: center;
+}
+
+/* 1. Trạng thái PENDING (Chờ xác nhận) - Màu Vàng */
+.status-pending {
+  background-color: #fff9db;
+  color: #f08c00;
+  border: 1px solid #ffe066;
+}
+
+/* 2. Trạng thái ORDERED (Đang phục vụ/On Process) - Màu Cam */
+.status-ordered {
+  background-color: #fff4e6;
+  color: #fd7e14;
+  border: 1px solid #ffd8a8;
+}
+
+/* 3. Trạng thái COMPLETED (Hoàn thành) - Màu Xanh lá */
+.status-completed {
+  background-color: #ebfbee;
+  color: #2b8a3e;
+  border: 1px solid #b2f2bb;
+}
+
+/* 4. Trạng thái CANCELLED (Đã hủy) - Màu Đỏ/Xám */
+.status-cancelled {
+  background-color: #fff5f5;
+  color: #fa5252;
+  border: 1px solid #ffc9c9;
+}
+
+/* 5. Mặc định */
+.status-default {
+  background-color: #f1f3f5;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+/* Icon styling giữ nguyên */
+.icon-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+}
+.bg-blue {
+  background: #4dabf7;
+  box-shadow: 0 4px 10px rgba(77, 171, 247, 0.3);
+}
+.bg-orange {
+  background: #ffa94d;
+  box-shadow: 0 4px 10px rgba(255, 169, 77, 0.3);
+}
+.bg-green {
+  background: #69db7c;
+  box-shadow: 0 4px 10px rgba(105, 219, 124, 0.3);
+}
+.bg-red {
+  background: #ff8787;
+  box-shadow: 0 4px 10px rgba(255, 135, 135, 0.3);
+}
+
+.card-info h3 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+}
+.card-info p {
+  margin: 4px 0 0 0;
+  color: #888;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 2. Container Trắng chứa Bảng (White Box) */
+.white-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  overflow: hidden; /* Bo góc cho con bên trong */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tabs */
+.table-controls {
+  padding: 16px 24px;
+  border-bottom: 1px solid #f1f3f5;
+  display: flex;
+  justify-content: space-between; /* Đẩy 2 phần ra xa nhau */
+  align-items: center;
+  flex-wrap: wrap; /* Cho phép xuống dòng trên mobile */
+  gap: 16px;
+}
+.filter-icon {
+  color: #868e96;
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.time-select {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: #495057;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  padding-right: 4px;
+}
+
+.time-select option {
+  color: #333;
+  padding: 10px;
+}
+
+/* Responsive: Trên màn hình nhỏ, dropdown full width */
+@media (max-width: 768px) {
+  .table-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-box {
+    width: 100%;
+    justify-content: center;
+  }
+}
+.status-tabs {
+  width: 56;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #666;
+  border-radius: 8px;
+  font-size: 12px;
+  transition: all 0.2s;
+  width: 75px;
+}
+
+.tab-btn:hover {
+  background: #f8f9fa;
+}
+.tab-btn.active {
+  background-color: #ff6b6b; /* Màu chủ đạo */
+  color: white;
+  box-shadow: 0 4px 6px rgba(255, 107, 107, 0.25);
+}
+
+/* Table Styling */
+.table-wrapper {
+  padding: 0; /* Bỏ padding để table full width */
+  overflow-x: auto;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.custom-table th {
+  background: #f8f9fa;
+  text-align: left;
+  padding: 16px 24px;
+  color: #6c757d;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.custom-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid #f1f3f5;
+  font-size: 14px;
+
+  vertical-align: middle;
+}
+.custom-table tr:last-child td {
+  border-bottom: none;
+}
+.custom-table tr:hover {
+  background-color: #fcfcfc;
+}
+
+/* Status Badges & Buttons giữ nguyên hoặc tinh chỉnh nhẹ */
+.text-price {
+  font-weight: 700;
+  color: #d65d16;
+  font-family: monospace;
+  font-size: 15px;
+}
+/* Container của footer */
+.pagination-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #f1f3f5;
+  display: flex;
+  justify-content: space-between; /* Đẩy text sang trái, nút sang phải */
+  align-items: center;
+}
+
+.showing-text {
+  font-size: 14px;
+  color: #888;
+}
+
+/* Container chứa các nút số */
+.pagination-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Style chung cho nút trang */
+.page-btn {
+  min-width: 36px;
+  height: 36px;
+  border: 1px solid #eee;
+  background-color: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0 6px;
+}
+
+.page-btn:hover:not(:disabled):not(.active) {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #fd7e14; /* Màu cam khi hover */
+}
+
+/* Style cho nút đang Active (Màu cam) */
+.page-btn.active {
+  background-color: #fd7e14; /* Màu cam chủ đạo */
+  color: white;
+  border-color: #fd7e14;
+  box-shadow: 0 2px 6px rgba(253, 126, 20, 0.3);
+}
+
+/* Style cho nút Next/Prev (< >) */
+.nav-btn {
+  background-color: #f8f9fa;
+  color: #888;
+  font-family: monospace; /* Để dấu < > đẹp hơn */
+  font-size: 16px;
+}
+
+.nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: #f1f3f5;
+}
+
+/* Dấu ba chấm (...) */
+.pagination-ellipsis {
+  color: #aaa;
+  font-size: 14px;
+  padding: 0 4px;
+  letter-spacing: 1px;
+}
