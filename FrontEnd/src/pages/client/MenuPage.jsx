@@ -1,36 +1,57 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom"; // Thêm useNavigate
 import {
-  getProducts,
-  getCategories,
   getProductsWith,
+  getCategories,
 } from "../../services/menu/menuService";
+import { createTokenFromTable } from "../../services/table/tableService";
+// Import service giỏ hàng
+import { addToCart, getCart } from "../../services/cart/cartService";
+
 import ClientHeader from "../../components/Client/ClientHeader";
 import ClientSidebar from "../../components/Client/ClientSidebar";
+import { FaPlus, FaStar, FaClock } from "react-icons/fa";
 import "../../styles/client-header.css";
 import "../../styles/menu-page.css";
-import { FaPlus, FaSearch } from "react-icons/fa";
-import { createTokenFromTable } from "../../services/table/tableService";
 
 const MenuPage = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate(); 
+
+  // Data State
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
 
+  // UI State
   const [activeCategoryId, setActiveCategoryId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [isSessionReady, setIsSessionReady] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cart = getCart();
+      const count = cart.reduce((total, item) => total + item.quantity, 0);
+      setCartCount(count);
+    };
+
+    updateCartCount();
+
+    window.addEventListener("storage", updateCartCount);
+
+    // Cleanup khi thoát trang
+    return () => window.removeEventListener("storage", updateCartCount);
+  }, []);
+  // ---------------------------------------------
 
   useEffect(() => {
     const initSession = async () => {
       const code = searchParams.get("table");
-      console.log("id", code);
       if (code) {
         try {
           await createTokenFromTable(code);
-          console.log("Đã vào bàn thành công!");
           setIsSessionReady(true);
         } catch (err) {
           console.error("Lỗi vào bàn:", err);
@@ -48,7 +69,7 @@ const MenuPage = () => {
         const data = await getCategories();
         setCategories(data);
       } catch (e) {
-        console.error("Lỗi lấy danh mục:", e);
+        console.error("Lỗi danh mục:", e);
       }
     };
     fetchCats();
@@ -60,19 +81,14 @@ const MenuPage = () => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const params = {
-          availableOnly: true,
-        };
-
+        const params = { availableOnly: true };
         if (activeCategoryId) params.categoryId = activeCategoryId;
         if (searchTerm.trim() !== "") params.search = searchTerm.trim();
-
-        console.log("Calling Product API params:", params);
 
         const data = await getProductsWith(params);
         setProducts(data);
       } catch (e) {
-        console.error("Lỗi lấy sản phẩm:", e);
+        console.error("Lỗi sản phẩm:", e);
       } finally {
         setLoading(false);
       }
@@ -85,144 +101,87 @@ const MenuPage = () => {
     return () => clearTimeout(timeoutId);
   }, [activeCategoryId, searchTerm, isSessionReady]);
 
-  const handleAddToCart = (item) => {
-    alert(`Đã thêm ${item.name} vào giỏ!`);
-  };
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
-  const handleCategorySelect = (catId) => {
-    setActiveCategoryId(catId);
-    // Đóng sidebar trên mobile sau khi chọn
-    if (window.innerWidth <= 768) {
-      setSidebarOpen(false);
-    }
+  const handleAddToCart = (item, e) => {
+    e.stopPropagation();
+    addToCart(item);
   };
 
   return (
-    <div className="client-layout">
+    <div className="modern-menu-layout">
       <ClientHeader
-        cartCount={0}
-        userName="Khách hàng"
-        onMenuToggle={toggleSidebar}
+        cartCount={cartCount}
+        userName="Khách Hàng"
+        searchTerm={searchTerm}
+        userAddress={searchParams.get("table")}
+        onSearchChange={(e) => setSearchTerm(e.target.value)}
+        onCartClick={() => navigate("/cart")}
       />
-
-      {/* Overlay cho mobile */}
-      <div
-        className={`sidebar-overlay ${sidebarOpen ? "show" : ""}`}
-        onClick={() => setSidebarOpen(false)}
-      />
-
-      <div className="client-body">
-        {/* Sidebar Danh mục */}
+      <div className="category-container-wrapper">
         <ClientSidebar
           categories={categories}
           activeCatId={activeCategoryId}
-          onSelectCategory={handleCategorySelect}
-          isOpen={sidebarOpen}
+          onSelectCategory={setActiveCategoryId}
         />
+      </div>
 
-        {/* Nội dung chính */}
-        <main className="menu-list">
-          {/* Welcome Section */}
-          <div className="welcome-section">
-            <div className="welcome-greeting">Xin chào</div>
-            <h1 className="welcome-title">Hôm nay bạn muốn ăn gì?</h1>
-          </div>
+      <main className="product-section">
+        <div className="section-title-row">
+          <h3>
+            {activeCategoryId
+              ? categories.find((c) => c.id === activeCategoryId)?.name
+              : "Món ngon phổ biến"}
+          </h3>
+          <span className="see-all">See All &gt;</span>
+        </div>
 
-          {/* Thanh tìm kiếm */}
-          <div className="menu-search">
-            <FaSearch className="search-icon" />
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Tìm kiếm món ăn..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-
-          {/* Featured Banner - Optional */}
-          {!searchTerm && !activeCategoryId && (
-            <div className="featured-banner">
-              <div className="banner-content">
-                <h2>Khuyến mãi hôm nay</h2>
-                <p>Giảm giá đến 30% cho các món ăn được chọn</p>
-              </div>
-              <img
-                src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"
-                alt="Featured"
-                className="banner-image"
-                onError={(e) => (e.target.style.display = "none")}
-              />
-            </div>
-          )}
-
-          {/* Section Header */}
-          <div className="section-header">
-            <h2 className="section-title">
-              {activeCategoryId
-                ? categories.find((c) => c.id === activeCategoryId)?.name ||
-                  "Thực đơn"
-                : searchTerm
-                ? "Kết quả tìm kiếm"
-                : "Tất cả món ăn"}
-            </h2>
-            <button className="view-all-btn">Xem tất cả</button>
-          </div>
-
-          {/* Grid sản phẩm */}
-          {loading ? (
-            <div className="loading-state">Đang tải món ngon...</div>
-          ) : (
-            <div className="product-grid-client">
-              {products.length > 0 ? (
-                products.map((item) => (
-                  <div className="product-card-client" key={item.id}>
-                    <div className="product-image-container">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="p-img"
-                        onError={(e) =>
-                          (e.target.src =
-                            "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400")
-                        }
-                      />
-                      {item.isNew && <span className="product-badge">Mới</span>}
-                    </div>
-                    <div className="p-details">
-                      <div className="p-name">{item.name}</div>
-                      <div className="p-desc">
-                        {item.description && item.description.length > 50
-                          ? item.description.substring(0, 50) + "..."
-                          : item.description || "Món ăn ngon tuyệt vời"}
-                      </div>
-                      <div className="p-price">
-                        <span className="price-amount">
-                          {item.formattedPrice}
-                        </span>
-                        <button
-                          className="btn-add-cart"
-                          onClick={() => handleAddToCart(item)}
-                        >
-                          <FaPlus size={14} />
-                        </button>
-                      </div>
+        {loading ? (
+          <div className="loading-spinner">Đang tải món ngon...</div>
+        ) : (
+          <div className="product-grid">
+            {products.length > 0 ? (
+              products.map((item) => (
+                <div className="food-card" key={item.id}>
+                  <div className="card-img-box">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      onError={(e) =>
+                        (e.target.src = "https://placehold.co/400x300")
+                      }
+                    />
+                    <div className="price-tag">
+                      {item.formattedPrice || item.price}
                     </div>
                   </div>
-                ))
-              ) : (
-                <div className="empty-state">
-                  <p>Không tìm thấy món ăn phù hợp</p>
+                  <div className="card-content">
+                    <h4 className="food-name">{item.name}</h4>
+                    <p className="food-desc">
+                      {item.description || "Món ngon trứ danh..."}
+                    </p>
+
+                    <div className="card-footer">
+                      <div className="rating-info">
+                        <FaStar className="star-icon" />
+                        <span>4.7</span>
+                        <span className="dot">•</span>
+                      </div>
+
+                      <button
+                        className="btn-add-mini"
+                        onClick={(e) => handleAddToCart(item, e)}
+                      >
+                        <FaPlus />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              )}
-            </div>
-          )}
-        </main>
-      </div>
+              ))
+            ) : (
+              <div className="empty-state">Không tìm thấy món nào :(</div>
+            )}
+          </div>
+        )}
+      </main>
     </div>
   );
 };

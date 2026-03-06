@@ -1,42 +1,60 @@
 import React from "react";
-import { FaShoppingCart, FaArrowLeft, FaBars, FaUser } from "react-icons/fa";
+import {
+  FaBars,
+  FaShoppingBag,
+  FaSearch,
+  FaMapMarkerAlt,
+  FaChevronDown,
+} from "react-icons/fa";
 
 const ClientHeader = ({
   cartCount = 0,
-  onBack,
+  userName = "Khách",
+  searchTerm,
+  onSearchChange,
   onMenuToggle,
-  userName = "Khách hàng",
+  userAddress = "Vui lòng chọn bàn",
+  onCartClick, // 1. Nhận prop onCartClick từ cha
 }) => {
   return (
-    <header className="client-header">
-      <div className="header-left">
-        {onBack && (
-          <button className="header-btn btn-back" onClick={onBack}>
-            <FaArrowLeft />
-          </button>
-        )}
+    <div className="client-header-container">
+      <div className="top-bar">
+        <button className="icon-btn menu-btn" onClick={onMenuToggle}>
+          <FaBars />
+        </button>
 
-        <div className="header-brand">
-          <div className="brand-icon">
-            <FaUser />
-          </div>
-          <div className="brand-info">
-            <span className="brand-greeting">Xin chào</span>
-            <span className="brand-name">{userName}</span>
+        <div className="address-section">
+          <span className="label-deliver">Bàn số / Địa chỉ</span>
+          <div className="address-value">
+            <span className="text">{userAddress}</span>
+            <FaChevronDown className="arrow-icon" />
           </div>
         </div>
-      </div>
 
-      <div className="header-right">
-        <button
-          className="header-btn btn-cart"
-          onClick={() => console.log("Open cart")}
-        >
-          <FaShoppingCart />
+        <button className="icon-btn cart-btn" onClick={onCartClick}>
+          <FaShoppingBag />
           {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
         </button>
       </div>
-    </header>
+
+      <div className="greeting-section">
+        <span className="greeting-text">
+          Xin chào {userName}, <strong>Chúc ngon miệng!</strong>
+        </span>
+      </div>
+      <div className="search-section">
+        <div className="search-box">
+          <FaSearch className="search-icon" />
+          <input
+            type="text"
+            placeholder="Tìm món ăn..."
+            className="search-input"
+            value={searchTerm}
+            onChange={onSearchChange}
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 

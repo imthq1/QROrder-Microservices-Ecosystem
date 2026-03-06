@@ -1,59 +1,41 @@
 import React from "react";
-import { FaChevronRight } from "react-icons/fa";
 
-const ClientSidebar = ({
-  categories,
-  activeCatId,
-  onSelectCategory,
-  isOpen = false,
-}) => {
+const ClientSidebar = ({ categories, activeCatId, onSelectCategory }) => {
   return (
-    <aside className={`client-sidebar ${isOpen ? "show" : ""}`}>
-      <div className="sidebar-title">Danh mục món ăn</div>
-      <div className="sidebar-subtitle">Chọn để xem thực đơn</div>
-
-      {/* All Categories Option */}
-      <div
-        className={`category-item ${!activeCatId ? "active" : ""}`}
-        onClick={() => onSelectCategory(null)}
-      >
-        <img
-          src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100"
-          alt="Tất cả"
-          className="category-image"
-          onError={(e) => (e.target.src = "https://placehold.co/60")}
-        />
-        <div className="category-info">
-          <div className="category-name">Tất cả món</div>
-          <div className="category-count">Xem tất cả</div>
-        </div>
-        <FaChevronRight className="category-arrow" />
+    <div className="category-section">
+      <div className="section-header">
+        <h3 className="title">All Categories</h3>
+        <button className="see-all-btn">See All &gt;</button>
       </div>
 
-      {/* Category List */}
-      {categories.map((cat) => (
+      <div className="category-horizontal-list">
         <div
-          key={cat.id}
-          className={`category-item ${activeCatId === cat.id ? "active" : ""}`}
-          onClick={() => onSelectCategory(cat.id)}
+          className={`cat-pill ${!activeCatId ? "active" : ""}`}
+          onClick={() => onSelectCategory(null)}
         >
-          <img
-            src={
-              cat.image ||
-              "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100"
-            }
-            alt={cat.name}
-            className="category-image"
-            onError={(e) => (e.target.src = "https://placehold.co/60")}
-          />
-          <div className="category-info">
-            <div className="category-name">{cat.name}</div>
-            <div className="category-count">{cat.productCount || 12} Món</div>
-          </div>
-          <FaChevronRight className="category-arrow" />
+          <div className="cat-icon-circle">🔥</div>
+          <span className="cat-name">All</span>
         </div>
-      ))}
-    </aside>
+
+        {categories.map((cat) => (
+          <div
+            key={cat.id}
+            className={`cat-pill ${activeCatId === cat.id ? "active" : ""}`}
+            onClick={() => onSelectCategory(cat.id)}
+          >
+            <div className="cat-img-wrapper">
+              <img
+                src={cat.image || "https://placehold.co/50"}
+                alt={cat.name}h
+                className="cat-img"
+                onError={(e) => (e.target.src = "https://placehold.co/50")}
+              />
+            </div>
+            <span className="cat-name">{cat.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 

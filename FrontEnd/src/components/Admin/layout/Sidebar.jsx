@@ -9,8 +9,10 @@ import {
   FaPaperPlane,
   FaCog,
   FaOpencart,
+  FaCalendarAlt,
 } from "react-icons/fa";
 import { CiViewTable } from "react-icons/ci";
+import { BsBorderWidth } from "react-icons/bs";
 const Sidebar = () => {
   const location = useLocation();
   const isActive = (path) => {
@@ -46,13 +48,25 @@ const Sidebar = () => {
             <CiViewTable />
           </Link>
         </li>
-        <li className="disabled">
-          <FaBell />
+        <li className={isActive("/admin/kitchens")}>
+          <Link to="/admin/kitchens">
+            <FaBell />
+          </Link>
         </li>
 
         <li className={isActive("/admin/users")}>
           <Link to="/admin/users">
             <FaUser />
+          </Link>
+        </li>
+        <li className={isActive("/admin/orders")}>
+          <Link to="/admin/orders">
+            <BsBorderWidth />
+          </Link>
+        </li>
+        <li className={isActive("/admin/calendars")}>
+          <Link to="/admin/calendars">
+            <FaCalendarAlt />
           </Link>
         </li>
 

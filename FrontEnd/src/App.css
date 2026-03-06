@@ -1,10 +1,11 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+:root {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f8f9fa; /* Màu nền xám nhẹ của ô search */
+  --accent-color: #ffc529; /* Màu vàng cam chủ đạo */
+  --text-dark: #181c2e;
+  --text-grey: #a0a5ba;
+  --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
-
 .logo {
   height: 6em;
   padding: 1.5em;
