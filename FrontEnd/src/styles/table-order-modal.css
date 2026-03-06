@@ -1,0 +1,242 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-receipt-container {
+  background: #fff;
+  width: 550px;
+  max-width: 95%;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.receipt-header {
+  padding: 20px 24px;
+  border-bottom: 2px dashed #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+}
+
+.receipt-title-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.receipt-title-box h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+.receipt-icon {
+  color: #1864ab;
+  font-size: 20px;
+}
+
+.btn-close-modal {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: #adb5bd;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-close-modal:hover {
+  color: #fa5252;
+}
+
+/* Table styling */
+.receipt-body {
+  padding: 24px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.receipt-table th {
+  padding-bottom: 12px;
+  color: #868e96;
+  font-size: 13px;
+  font-weight: 600;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.receipt-table td {
+  padding: 16px 0;
+  border-bottom: 1px dashed #f1f3f5;
+  color: #495057;
+  font-size: 15px;
+}
+.receipt-table tr:last-child td {
+  border-bottom: none;
+}
+
+.item-name {
+  display: block;
+  font-weight: 600;
+  color: #333;
+}
+.item-note {
+  display: block;
+  font-size: 12px;
+  color: #fd7e14;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.fw-bold {
+  font-weight: 700;
+  color: #333;
+}
+
+/* Footer */
+.receipt-footer {
+  padding: 20px 24px;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+.total-amount {
+  color: #fa5252;
+  font-size: 24px;
+}
+
+.btn-checkout-primary {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+  background: #2b8a3e;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: 0.2s;
+}
+.btn-checkout-primary:hover:not(:disabled) {
+  background: #237032;
+}
+.btn-checkout-primary:disabled {
+  background: #b2f2bb;
+  cursor: not-allowed;
+}
+/* ... CSS cũ giữ nguyên ... */
+
+/* Thêm vào CSS cho Editable Table */
+.editable-table td {
+  vertical-align: middle;
+}
+
+/* Khối điều khiển số lượng (Quantity Control) */
+.qty-control {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  overflow: hidden;
+  background: white;
+}
+
+.qty-btn {
+  background: transparent;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: #495057;
+  font-size: 10px;
+  transition: 0.2s;
+}
+
+.qty-btn:hover:not(:disabled) {
+  background: #f1f3f5;
+  color: #2b8a3e;
+}
+
+.qty-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.qty-value {
+  min-width: 24px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Nút xóa món ăn */
+.btn-delete-item {
+  background: transparent;
+  border: none;
+  color: #ff8787;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+
+.btn-delete-item:hover {
+  background: #fff5f5;
+  color: #e03131;
+}
+
+/* Nút Cập nhật (Màu cam thay vì Xanh lá) */
+.btn-checkout-primary.btn-update {
+  background: #fd7e14;
+}
+
+.btn-checkout-primary.btn-update:hover {
+  background: #e8590c;
+}

@@ -1,0 +1,190 @@
+/* --- Bố cục chính --- */
+.table-white-container {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  padding: 24px;
+  min-height: 500px;
+}
+
+/* --- Toolbar (Thống kê & Chú thích) --- */
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #f1f3f5;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.table-stats {
+  font-size: 14px;
+  color: #495057;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.table-stats .divider {
+  color: #dee2e6;
+}
+.text-green {
+  color: #2b8a3e;
+}
+.text-blue {
+  color: #1864ab;
+}
+
+.table-legend {
+  display: flex;
+  gap: 16px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+}
+.color-box {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+.color-box.empty {
+  background-color: #40c057;
+}
+.color-box.occupied {
+  background-color: #228be6;
+}
+
+/* --- Lưới hiển thị Bàn (CSS Grid) --- */
+.table-grid {
+  display: grid;
+  /* Tự động chia cột, mỗi thẻ rộng tối thiểu 220px */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* --- Thiết kế Thẻ Bàn Hiện Đại (Modern Table Card) --- */
+.modern-table-card {
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.table-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 4px;
+}
+
+.card-middle {
+  flex: 1;
+  padding: 8px 0;
+}
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #666;
+}
+.info-icon {
+  color: #adb5bd;
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.btn-action-mini {
+  background: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  color: #228be6;
+  transition: 0.2s;
+}
+.btn-action-mini:hover {
+  background: #228be6;
+  color: white;
+}
+
+/* --- TRẠNG THÁI: TRỐNG (Màu Xanh Lá / Trắng) --- */
+.modern-table-card.is-empty {
+  background: #ffffff;
+  border-color: #e9ecef;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+.modern-table-card.is-empty:hover {
+  border-color: #b2f2bb;
+  box-shadow: 0 4px 12px rgba(64, 192, 87, 0.1);
+  transform: translateY(-2px);
+}
+.modern-table-card.is-empty .status-dot {
+  background: #40c057;
+}
+.modern-table-card.is-empty .status-badge {
+  background: #ebfbee;
+  color: #2b8a3e;
+}
+
+/* --- TRẠNG THÁI: ĐANG PHỤC VỤ (Màu Xanh Biển) --- */
+.modern-table-card.is-occupied {
+  background: #e7f5ff; /* Nền xanh biển nhạt */
+  border-color: #a5d8ff;
+}
+.modern-table-card.is-occupied:hover {
+  box-shadow: 0 4px 12px rgba(34, 139, 230, 0.15);
+  transform: translateY(-2px);
+}
+.modern-table-card.is-occupied .table-title {
+  color: #1864ab;
+}
+.modern-table-card.is-occupied .info-row {
+  color: #1971c2;
+}
+.modern-table-card.is-occupied .info-icon {
+  color: #74c0fc;
+}
+.modern-table-card.is-occupied .status-dot {
+  background: #228be6;
+}
+.modern-table-card.is-occupied .status-badge {
+  background: #339af0;
+  color: #ffffff;
+}
