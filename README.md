@@ -1,57 +1,65 @@
 # Smart Restaurant - QR-Based Self-Ordering System
 
-A modern, high-performance Microservices system designed for smart restaurants. This application allows customers to scan a **unique QR code at their table** to browse the menu and place orders directly, eliminating the need for traditional manual service.
+A high-performance, event-driven Microservices system designed for modern smart restaurants. This application enables customers to scan a **table-specific QR code** to browse the menu and place orders, with **real-time updates** on their order status.
 
 ---
+## System Architecture
 
-## Key Highlight: QR-Code Ordering
-- **Table-Specific QR Codes:** Each table in the restaurant has a unique QR code generated/managed by the **Menu Service**.
-- **Self-Service Workflow:** Customers scan the code -> View the real-time menu -> Place an order -> Order is instantly sent to the **Kitchen Service** via **Kafka**.
-- **Table Management:** The **Menu Service** tracks table availability and links active sessions to specific table IDs.
+<img width="658" height="796" alt="image" src="https://github.com/user-attachments/assets/d12a8656-701e-47bf-821f-946dd8a4e585" />
 
----
+*Overview of the microservices ecosystem and inter-service communication.*
 
 ## System Architecture
 
-The project follows a cloud-native Microservices pattern:
+The project leverages a cloud-native architecture for high availability and instant responsiveness:
 
-* **API Gateway:** Routes customer requests from the QR-landing page to internal services.
-* **Service Discovery (Eureka):** Dynamically manages service instances.
-* **Event-Driven Architecture:** Uses **Apache Kafka** to decouple `Order Service` and `Kitchen Service`, ensuring orders are never lost.
+* **API Gateway:** Centralized entry point for routing and load balancing.
+* **Service Discovery (Eureka):** Dynamic registration and discovery of microservices.
+* **Event-Driven Architecture (Kafka):** De-couples `Order Service` and `Kitchen Service` for reliable message processing.
+* **Real-time Updates (WebSocket):** Provides instant notifications to both customers (order status) and staff (new orders) without page reloads.
+
+---
+
+## Key Features
+
+- **QR-Code Self-Ordering:** Unique QR codes for each table link customers directly to their session.
+- **Real-time Kitchen Dashboard:** Chefs receive orders instantly via **WebSocket** and **Kafka**.
+- **Live Order Tracking:** Customers receive real-time notifications (e.g., "Cooking", "Ready to Serve") via **WebSocket**.
+- **Internal Operations:** Dedicated `Calendar Service` for staff shifts, inventory audits, and restaurant events.
+- **Table Management:** Integrated within `Menu Service` to track occupancy and QR assignments.
 
 ---
 
 ## Microservices Overview
 
-| Service | Primary Responsibility | Data Store |
+| Service | Primary Responsibility | Tech/Storage |
 | :--- | :--- | :--- |
-| **Identity Service** | Auth & Permissions (Staff vs. Customer sessions). | MySQL |
-| **Menu Service** | Digital Menu management & **Table/QR Code Management**. | MySQL |
-| **Order Service** | Processes QR-initiated orders and tracks payment status. | MySQL |
-| **Kitchen Service** | Receives real-time order streams from Kafka for chefs. | MySQL |
-| **Calendar Service** | Internal scheduling (Staff shifts, Inventory audits, Meetings). | MySQL |
-| **User Service** | Customer profile and loyalty points management. | MySQL |
+| **Identity Service** | RBAC, JWT Authentication & User Sessions. | MySQL |
+| **Menu Service** | Digital Menu & **Table/QR Code Management**. | MySQL |
+| **Order Service** | Transactional logic and order lifecycle. | MySQL |
+| **Kitchen Service** | Order preparation workflow & Chef UI. | MySQL, WebSocket |
+| **Calendar Service** | Staff scheduling & Inventory audit logs. | MySQL |
+| **User Service** | Customer loyalty and profile management. | MySQL |
+
+---
+
+## The Real-Time Workflow
+
+1.  **Scan & Browse:** Customer scans the QR code (`table_id` encoded).
+2.  **Order Placement:** `Order Service` saves the order and produces a message to **Kafka**.
+3.  **Kitchen Notification:** `Kitchen Service` consumes the Kafka message and pushes a **WebSocket** alert to the Chef's dashboard.
+4.  **Status Update:** When the Chef clicks "Prepared", the `Kitchen Service` sends a **WebSocket** notification back to the specific Customer's device.
 
 ---
 
 ## Tech Stack
 
 * **Backend:** Java Spring Boot, Spring Cloud (Gateway, Eureka).
-* **Database:** MySQL (Relational).
-* **Messaging:** Apache Kafka (Event-driven updates).
-* **Security:** JWT (JSON Web Tokens) for secure table sessions.
+* **Real-time:** **Spring WebSocket (STOMP)**.
+* **Messaging:** **Apache Kafka** (Asynchronous events).
+* **Database:** MySQL.
 * **Build Tool:** Maven.
 
----
 
-## How It Works
-
-1.  **Customer Scans QR:** The URL contains a `table_id`. The system identifies the customer's location.
-2.  **Menu Browsing:** `Menu Service` provides the digital catalog.
-3.  **Order Placement:** `Order Service` validates the order and pushes a message to the `order-topic` in **Kafka**.
-4.  **Kitchen Processing:** `Kitchen Service` consumes the message and displays the order on the chef's dashboard.
-5.  **Internal Ops:** Managers use the `Calendar Service` to schedule "Stock-taking" or "Staff Meetings" without affecting the ordering flow.
-
-
-## Author
+##  Author
 - **GitHub:** [@imthq1](https://github.com/imthq1)
