@@ -101,6 +101,5 @@ Centralized planning for restaurant activities.
 ##  Author
 - **GitHub:** [@imthq1](https://github.com/imthq1)
 
-image client 
 
 
